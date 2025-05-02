@@ -9,6 +9,14 @@ const newStarID = ref('')
 const formErrors = ref([])
 const mostRecentStudent = ref({})
 
+const { addNewStudentErrors } = storeToRefs(studentStore)
+
+watch( addNewStudentErrors, () => {
+  if (addNewStudentErrors.value) {
+    alert(addNewStudentErrors.value.join('\n'))
+  }
+})
+
 const addStudent = () => {
   formErrors.value = []   // clear errors array
 
@@ -45,7 +53,7 @@ const addStudent = () => {
       </div>
     </div>
 
-    <div id="new-student-form" class="card add-student m-2 p-2">
+    <div id="new-student-form" class="card add-student m- p-2">
       <h4 class="card-title">Add new student</h4>
 
       <div class="form-group mb-3">
