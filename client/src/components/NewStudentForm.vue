@@ -3,11 +3,11 @@ import { ref } from 'vue'
 import { useStudentStore } from '../stores/StudentStore'
 const studentStore = useStudentStore()
 
+
 const newStudentName = ref('')
 const newStarID = ref('')
 
 const formErrors = ref([])
-const mostRecentStudent = ref({})
 
 const { addNewStudentErrors } = storeToRefs(studentStore)
 
@@ -31,7 +31,7 @@ const addStudent = () => {
   // if there are no errors
   if (formErrors.value.length === 0) {
     let student = {name: newStudentName.value, starID: newStarID.value, present: false}
-    studentList.value.push(student)
+
 
     studentStore.addNewStudent(student)
 

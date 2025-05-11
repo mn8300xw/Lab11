@@ -14,4 +14,4 @@ const pinia = createPinia()
 
 app.use(pinia)
 
-createApp(App).mount('#app')
+app.mount('#app')

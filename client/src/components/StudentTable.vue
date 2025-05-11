@@ -1,28 +1,36 @@
 <script setup>
-
+  import StudentRow from './StudentRow.vue'
+  import { computed } from 'vue'
   import { useStudentStore } from '../stores/StudentStore.js'
   import { storeToRefs } from 'pinia'
 
   const studentStore = useStudentStore()
 
-  const { studentList, studentCount } = storeToRefs(studentStore)
+  const { sortedStudents, studentCount } = storeToRefs(studentStore)
 
   const deleteStudent = (student) => {
     studentStore.deleteStudent(student)
   }
 
-  const arrivedOrLeft = (student) => {
+  const arrivedOrLeft = (student, isStudentPresent) => {
+    student.present = isStudentPresent
     studentStore.arrivedOrLeft(student)
   }
 
-
+  const pluralStudentMessage = computed (() => {
+    if (studentCount.value === 1) {
+      return 'There is 1 student in class.'
+    } else {
+      return `There are ${studentCount.value} students in class.`
+    }
+  })
 
 </script>
 
 <template>
   <div id="student-list-table" class="card m-2 p-2">
     <h4 class="card-title">Student List</h4>
-    <h5>There are {{ studentCount }} student(s) in class.</h5>
+    <h5 class="card-subtitle text-muted">{{  pluralStudentMessage }}</h5>
 
     <div id="student-table">
       <table class="table">
@@ -36,20 +44,14 @@
         </thead>
 
         <tbody>
-        <tr v-for="student in studentList" v-bind:key="student.starID" class="align-middle" v-bind:class="{ present: student.present, absent: !student.present }">
-          <td>{{ student.name }}</td>
-          <td>{{ student.starID }}</td>
-          <td>
-            <input type="checkbox" v-model="student.present" v-on:change="arrivedOrLeft(student)">
-            <span class="mx-3" v-if="student.present">Here!</span>
-            <span class="mx-3" v-else>Not present</span>
-          </td>
-          <td>
-            <button class="btn btn-danger" v-on:click="deleteStudent(student)">
-              <i class="bi bi-trash-fill"></i> Delete
-            </button>
-          </td>
-        </tr>
+        <StudentRow
+            v-for="student in sortedStudents"
+            v-bind:key="student.starID"
+            v-bind:student="student"
+            v-on:delete-student="deleteStudent"
+            v-on:arrived-or-left="arrivedOrLeft">
+        </StudentRow>
+
         </tbody>
       </table>
     </div>

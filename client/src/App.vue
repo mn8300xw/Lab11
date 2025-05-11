@@ -3,7 +3,7 @@
 import { onMounted } from 'vue'
 
 import StudentMessage from './components/StudentMessage.vue'
-import NewStudent from './components/NewStudentForm.vue'
+import NewStudentForm from './components/NewStudentForm.vue'
 import StudentTable from './components/StudentTable.vue'
 
 import { useStudentStore } from './stores/StudentStore'
@@ -20,10 +20,10 @@ onMounted( () => {
 <template>
 
   <StudentMessage></StudentMessage>
-  <NewStudent></NewStudent>
+  <NewStudentForm></NewStudentForm>
   <StudentTable></StudentTable>
 </template>
 
-<style scoped>
+<style>
 
 </style>

@@ -1,5 +1,4 @@
 <script setup>
-import { ref } from 'vue'
 import { useStudentStore } from '../stores/StudentStore.js'
 import { storeToRefs } from 'pinia'
 
